@@ -5,6 +5,8 @@
  - Licensed under the GNU GPL version 3 or higher.
  -}
 
+{-# LANGUAGE CPP #-}
+
 module Git.HashObject where
 
 import Common
@@ -18,7 +20,7 @@ import Utility.Tmp
 type HashObjectHandle = CoProcess.CoProcessHandle
 
 hashObjectStart :: Repo -> IO HashObjectHandle
-hashObjectStart = CoProcess.rawMode <=< gitCoProcessStart True
+hashObjectStart = gitCoProcessStart True
 	[ Param "hash-object"
 	, Param "-w"
 	, Param "--stdin-paths"
@@ -39,6 +41,9 @@ hashFile h file = CoProcess.query h send receive
  - interface does not allow batch hashing without using temp files. -}
 hashBlob :: HashObjectHandle -> String -> IO Sha
 hashBlob h s = withTmpFile "hash" $ \tmp tmph -> do
+#ifdef mingw32_HOST_OS
+	hSetNewlineMode tmph noNewlineTranslation
+#endif
 	hPutStr tmph s
 	hClose tmph
 	hashFile h tmp
