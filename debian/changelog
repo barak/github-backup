@@ -1,8 +1,15 @@
-github-backup (1.20170301-1) UNRELEASED; urgency=medium
+github-backup (1.20170301-1) unstable; urgency=medium
 
   * New upstream version
+  * Bump libghc-github-dev Build-Depends to 0.15.0
+  * Remove unused binary-or-shlib-defines-rpath override
+  * Remove all patches, merged upstream
+  * Change Vcs-* to collab-maint
+  * Declare compliance with Policy 4.0.0, no changes needed
+  * Bump Debhelper compat to 10
+  * Orphan the package
 
- -- James McCoy <jamessan@debian.org>  Sat, 22 Jul 2017 14:55:08 -0400
+ -- James McCoy <jamessan@debian.org>  Sat, 22 Jul 2017 21:10:24 -0400
 
 github-backup (1.20160522-2) unstable; urgency=medium
 
