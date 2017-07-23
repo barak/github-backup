@@ -24,7 +24,6 @@ Homepage: https://github-backup.branchable.com/
 
 Package: github-backup
 Architecture: any
-Section: utils
 Depends: ${misc:Depends}, ${shlibs:Depends}, git
 Description: backs up data from GitHub
  github-backup is a simple tool you run in a git repository you cloned from
