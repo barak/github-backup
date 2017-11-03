@@ -39,7 +39,7 @@ Executable github-backup
   GHC-Options: -Wall -fno-warn-tabs
   Build-Depends:
     base (>= 4.8 && < 5),
-    github (>= 0.15.0 && < 0.16.0),
+    github (>= 0.15.0),
     MissingH, hslogger, directory, filepath, containers, mtl,
     network, exceptions, transformers, unix-compat, bytestring, vector,
     IfElse, pretty-show, text, process, optparse-applicative, utf8-string
@@ -107,7 +107,7 @@ Executable gitriddance
   GHC-Options: -Wall -fno-warn-tabs
   Build-Depends: 
     base (>= 4.8 && < 5),
-    github (>= 0.15.0 && < 0.16.0),
+    github (>= 0.15.0),
     text, filepath, MissingH, exceptions, transformers, bytestring, vector,
     hslogger, process, containers, unix-compat, IfElse, directory, mtl,
     utf8-string

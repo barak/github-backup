@@ -5,7 +5,7 @@ Build-Depends:
 	debhelper (>= 10),
 	ghc,
 	git,
-	libghc-github-dev (>= 0.15.0), libghc-github-dev (<< 0.16.0),
+	libghc-github-dev (>= 0.15.0),
 	libghc-missingh-dev,
 	libghc-hslogger-dev,
 	libghc-pretty-show-dev,
