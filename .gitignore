@@ -1,0 +1,8 @@
+*.hi
+*.o
+/Build/SysConfig.hs
+/Setup
+/dist/
+/github-backup
+/gitriddance
+/tags
