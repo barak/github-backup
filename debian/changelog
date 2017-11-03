@@ -3,8 +3,9 @@ github-backup (1.20170301-2) unstable; urgency=medium
   * Spelling correction in man page (closes: #832274)
   * Adopt package (closes: #869397)
   * Bump standards version, no changes required
+  * Relax on github library dependency (closes: #880579)
 
- -- Barak A. Pearlmutter <bap@debian.org>  Fri, 22 Sep 2017 11:44:57 +0100
+ -- Barak A. Pearlmutter <bap@debian.org>  Fri, 03 Nov 2017 03:09:03 +0000
 
 github-backup (1.20170301-1) unstable; urgency=medium
 
