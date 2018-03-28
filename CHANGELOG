@@ -1,3 +1,22 @@
+github-backup (1.20171127) UNRELEASED; urgency=medium
+
+  * Various updates to internal git and utility libraries shared
+    with git-annex.
+
+ -- Joey Hess <id@joeyh.name>  Thu, 14 Dec 2017 13:12:28 -0400
+
+github-backup (1.20171126) unstable; urgency=medium
+
+  * Updated to use github-0.18
+  * Pull requests retreived with authentication again.
+  * Build with -threaded, which fixes some issues with the non-threaded
+    GHC RTS.
+  * Removed dependency on MissingH, instead depending on split.
+  * Various updates to internal git and utility libraries shared
+    with git-annex.
+
+ -- Joey Hess <id@joeyh.name>  Sun, 26 Nov 2017 15:33:35 -0400
+
 github-backup (1.20170301) unstable; urgency=medium
 
   * No longer hosted on Github due to their horrible new TOS.

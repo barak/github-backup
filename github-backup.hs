@@ -157,9 +157,7 @@ stargazersStore = simpleHelper "stargazers" Github.stargazersFor $
 	storeSorted "stargazers"
 
 pullrequestsStore :: Storer
-pullrequestsStore = simpleHelper "pullrequest"
-	-- No way to send auth to pullRequestsFor currently.
-	(\_auth -> Github.pullRequestsFor) $
+pullrequestsStore = simpleHelper "pullrequest" Github.pullRequestsFor' $
 	forValues $ \req r -> do
 		let repo = requestRepo req
 		let n = Github.simplePullRequestNumber r

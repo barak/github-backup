@@ -16,6 +16,7 @@ module Utility.Directory (
 import System.IO.Error
 import Control.Monad
 import System.FilePath
+import System.PosixCompat.Files
 import Control.Applicative
 import Control.Concurrent
 import System.IO.Unsafe (unsafeInterleaveIO)
@@ -31,7 +32,6 @@ import Control.Monad.IfElse
 #endif
 
 import Utility.SystemDirectory
-import Utility.PosixFiles
 import Utility.Tmp
 import Utility.Exception
 import Utility.Monad
@@ -96,10 +96,10 @@ dirTreeRecursiveSkipping skipdir topdir = go [] [topdir]
 	go c (dir:dirs)
 		| skipdir (takeFileName dir) = go c dirs
 		| otherwise = unsafeInterleaveIO $ do
-			subdirs <- go c
+			subdirs <- go []
 				=<< filterM (isDirectory <$$> getSymbolicLinkStatus)
 				=<< catchDefaultIO [] (dirContents dir)
-			go (subdirs++[dir]) dirs
+			go (subdirs++dir:c) dirs
 
 {- Moves one filename to another.
  - First tries a rename, but falls back to moving across devices if needed. -}

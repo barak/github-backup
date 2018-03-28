@@ -1,4 +1,7 @@
 packages:
 - '.'
-resolver: lts-8.2
-extra-deps: []
+extra-deps: 
+ - IfElse-0.85
+explicit-setup-deps:
+  github-backup: true
+resolver: nightly-2017-11-25

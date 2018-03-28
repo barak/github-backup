@@ -4,11 +4,10 @@ import qualified GitHub.Data.Repos as Github
 import qualified GitHub.Data.Definitions as Github
 import qualified GitHub.Data.Name as Github
 import Data.List
-import Data.List.Utils
 import Data.Maybe
 import qualified Data.Text as T
 
-import Utility.PartialPrelude
+import Common
 import qualified Git
 import qualified Git.Types
 

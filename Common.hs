@@ -9,7 +9,6 @@ import "mtl" Control.Monad.State.Strict as X (liftIO)
 
 import Data.Maybe as X
 import Data.List as X hiding (head, tail, init, last)
-import Data.String.Utils as X hiding (join)
 
 import System.FilePath as X
 import System.IO as X hiding (FilePath)
@@ -29,5 +28,6 @@ import Utility.Directory as X
 import Utility.Monad as X
 import Utility.Data as X
 import Utility.Applicative as X
+import Utility.Split as X
 
 import Utility.PartialPrelude as X

@@ -1,5 +1,5 @@
 Name: github-backup
-Version: 1.20170301
+Version: 1.20171126
 Cabal-Version: >= 1.8
 Maintainer: Joey Hess <id@joeyh.name>
 Author: Joey Hess
@@ -36,13 +36,13 @@ Flag network-uri
 
 Executable github-backup
   Main-Is: github-backup.hs
-  GHC-Options: -Wall -fno-warn-tabs
+  GHC-Options: -Wall -fno-warn-tabs -threaded
   Build-Depends:
     base (>= 4.8 && < 5),
-    github (>= 0.15.0),
-    MissingH, hslogger, directory, filepath, containers, mtl,
-    network, exceptions, transformers, unix-compat, bytestring, vector,
-    IfElse, pretty-show, text, process, optparse-applicative, utf8-string
+    github (>= 0.18 && < 0.19),
+    text, filepath, exceptions, transformers, bytestring, vector,
+    hslogger, split, process, containers, unix-compat, IfElse,
+    directory, mtl, utf8-string, optparse-applicative, pretty-show
   
   if (! os(windows))
     Build-Depends: unix
@@ -55,6 +55,7 @@ Executable github-backup
     Build-Depends: network (< 2.6), network (>= 2.0)
   
   Other-Modules:
+    BuildInfo
     Build.Version
     Build.TestConfig
     Build.Configure
@@ -81,6 +82,7 @@ Executable github-backup
     Git.Sha
     Git.Remote
     Utility.Tmp
+    Utility.Tuple
     Utility.Path
     Utility.FileSystemEncoding
     Utility.Monad
@@ -100,6 +102,7 @@ Executable github-backup
     Utility.DottedVersion
     Utility.Applicative
     Utility.Directory
+    Utility.Split
     Utility.SystemDirectory
 
 Executable gitriddance
@@ -107,10 +110,10 @@ Executable gitriddance
   GHC-Options: -Wall -fno-warn-tabs
   Build-Depends: 
     base (>= 4.8 && < 5),
-    github (>= 0.15.0),
-    text, filepath, MissingH, exceptions, transformers, bytestring, vector,
-    hslogger, process, containers, unix-compat, IfElse, directory, mtl,
-    utf8-string
+    github (>= 0.18 && < 0.19),
+    text, filepath, exceptions, transformers, bytestring, vector,
+    hslogger, split, process, containers, unix-compat, IfElse,
+    directory, mtl, utf8-string
   
   if (! os(windows))
     Build-Depends: unix
@@ -122,8 +125,40 @@ Executable gitriddance
   else
     Build-Depends: network (< 2.6), network (>= 2.0)
 
+  Other-Modules:
+    Common
+    Git
+    Git.Command
+    Git.Config
+    Git.Construct
+    Git.FilePath
+    Git.Remote
+    Git.Types
+    Git.Url
+    Github.EnumRepos
+    Github.GetAuth
+    Utility.Applicative
+    Utility.CoProcess
+    Utility.Data
+    Utility.Directory
+    Utility.Env
+    Utility.Exception
+    Utility.FileMode
+    Utility.FileSystemEncoding
+    Utility.Misc
+    Utility.Monad
+    Utility.PartialPrelude
+    Utility.Path
+    Utility.Process
+    Utility.Process.Shim
+    Utility.SafeCommand
+    Utility.Split
+    Utility.SystemDirectory
+    Utility.Tmp
+    Utility.UserInfo
+
 custom-setup
-  Setup-Depends: base (>= 4.5), hslogger, MissingH, directory, process,
+  Setup-Depends: base (>= 4.5), hslogger, split, directory, process,
     unix-compat, unix, exceptions, bytestring, filepath, IfElse, mtl, Cabal
 
 source-repository head
