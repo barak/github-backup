@@ -18,8 +18,8 @@ Build-Depends:
 	libghc-utf8-string-dev,
 Maintainer: Barak A. Pearlmutter <bap@debian.org>
 Standards-Version: 4.1.0
-Vcs-Git: https://anonscm.debian.org/git/collab-maint/github-backup.git
-Vcs-Browser: https://anonscm.debian.org/git/collab-maint/github-backup.git
+Vcs-Git: https://salsa.debian.org/debian/github-backup.git
+Vcs-Browser: https://salsa.debian.org/debian/github-backup
 Homepage: https://github-backup.branchable.com/
 
 Package: github-backup
