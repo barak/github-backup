@@ -1,6 +1,7 @@
 github-backup (1.20171126-2) UNRELEASED; urgency=medium
 
   * d/changelog: Remove trailing whitespaces
+  * d/control: Remove trailing whitespaces
 
  -- Ondřej Nový <onovy@debian.org>  Mon, 01 Oct 2018 10:09:10 +0200
 
