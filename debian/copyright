@@ -2,6 +2,7 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Github Backup
 Source: https://hackage.haskell.org/package/github-backup
         https://git.joeyh.name/git/github-backup.git
+Upstream-Contact: Joey Hess <id@joeyh.name>
 
 Files: *
 Copyright: © 2010-2014 Joey Hess <joey@kitenet.net>
