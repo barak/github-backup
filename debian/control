@@ -2,7 +2,7 @@ Source: github-backup
 Section: utils
 Priority: optional
 Build-Depends:
-	debhelper (>= 11),
+	debhelper (>= 13~),
 	ghc,
 	git,
 	libghc-github-dev (>= 0.15.0),
