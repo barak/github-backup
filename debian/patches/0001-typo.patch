@@ -1,0 +1,21 @@
+From: "Barak A. Pearlmutter" <barak+git@pearlmutter.net>
+Date: Sun, 23 Aug 2020 22:38:11 +0100
+Subject: typo
+
+---
+ github-backup.1 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/github-backup.1 b/github-backup.1
+index b34206a..a076135 100644
+--- a/github-backup.1
++++ b/github-backup.1
+@@ -25,7 +25,7 @@ does not allow private repositories to be downloaded.
+ .PP
+ .IP --exclude=username/repository
+ When backing up a user or an organization, this can be used to exclude
+-bacup of a particular repository belonging to the user or organization.
++backup of a particular repository belonging to the user or organization.
+ This option can be specified any number of time to exclude more than one
+ repository.
+ .PP
