@@ -1,0 +1,9 @@
+[[!comment format=mdwn
+ username="pabs3@49c776417680694a0f3295ee80df4edfca300096"
+ nickname="pabs3"
+ avatar="http://cdn.libravatar.org/avatar/3bf5f3b29a3d68ddf11eb1a3d8c5dc65"
+ subject="comment 2"
+ date="2020-07-22T02:09:50Z"
+ content="""
+I have switched to the GITHUB_OAUTH_TOKEN variable and the issue has stopped occurring. I hadn't noticed the variable in the manual page, sorry for the noise. I guess the only thing to do now for this issue is to deprecate and remove support for the GITHUB_USER and GITHUB_PASSWORD environment variables, which seem to be checked by the github-backup codebase rather than the GitHub API Haskell codebase.
+"""]]

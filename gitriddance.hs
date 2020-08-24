@@ -28,8 +28,9 @@ main = do
 		<$> getAuth
 	r <- maybe (error "not in a git repository") Git.Config.read
 		=<< Git.Construct.fromCwd
+	rs <- Git.Construct.fromRemotes r
 	msg <- maybe (getMsg r) id <$> (headMaybe <$> getArgs)
-	case gitHubRemotes (onlyOriginRemote r) of
+	case map snd $ filter (isOriginRemote . fst) $ gitHubPairs rs of
 		[] -> error "origin does not seem to be a github repository"
 		[origin] -> closeall auth origin msg
 		_ -> error "somehow found multiple origin repos; this should be impossible!"
@@ -38,12 +39,10 @@ getMsg :: Git.Repo -> String
 getMsg r = fromMaybe (error "core.gitriddance needs to be set to a message to use when closing issues/pull requests (or pass the message on the command line)")
 	(Git.Config.getMaybe "core.gitriddance" r)
 
-{- Limit to only having the origin remote; we don't want to affect any
+{- Identify the origin remote; we don't want to affect any
  - other remotes that might be on github. -}
-onlyOriginRemote :: Git.Repo -> Git.Repo
-onlyOriginRemote r = r { Git.remotes = filter isorigin (Git.remotes r) }
-  where
-	isorigin rmt = Git.remoteName rmt == Just "origin"
+isOriginRemote :: Git.Repo -> Bool
+isOriginRemote rmt = Git.remoteName rmt == Just "origin"
 
 closeall :: Github.Auth -> GithubUserRepo -> String -> IO ()
 closeall auth (GithubUserRepo user repo) msg =
@@ -55,7 +54,7 @@ closeall auth (GithubUserRepo user repo) msg =
 		let i = Github.issueNumber issue
 		putStrLn $ "closing issue: " ++ T.unpack (Github.issueTitle issue)
 		either (oops "posting comment") (const $ return ())
-			=<< Github.createComment auth (fromString user) (fromString repo) (Github.mkId (Github.Id 0) i) (T.pack msg)
+			=<< Github.createComment auth (fromString user) (fromString repo) i (T.pack msg)
 		either (oops "closing issue/pull") (const $ return ())
-			=<< Github.editIssue auth (fromString user) (fromString repo) (Github.mkId (Github.Id 0) i)
+			=<< Github.editIssue auth (fromString user) (fromString repo) (Github.mkId (Github.Id 0) (Github.unIssueNumber i))
 				(Github.editOfIssue { Github.editIssueState = Just Github.StateClosed } )

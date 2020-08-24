@@ -1,0 +1,34 @@
+I am having trouble running github-backup under tor. A normal run works like this:
+
+    $ github-backup --no-forks anarcat
+    New repository: alabaster
+    Clonage dans 'alabaster'...
+    remote: Enumerating objects: 13, done.
+    remote: Counting objects: 100% (13/13), done.
+    remote: Compressing objects: 100% (11/11), done.
+    remote: Total 1572 (delta 2), reused 11 (delta 2), pack-reused 1559
+    Réception d'objets: 100% (1572/1572), 508.50 KiB | 2.12 MiB/s, fait.
+    Résolution des deltas: 100% (929/929), fait.
+    [...]
+
+But running under tor (with [torsocks](https://github.com/dgoulet/torsocks)) hangs forever:
+
+    $ torsocks github-backup --no-forks anarcat
+    [blank, hangs forever]
+
+`strace` shows the process is looping over this:
+
+    recvfrom(3, "", 2, 0, NULL, NULL)       = 0
+    select(4, [3], NULL, NULL, NULL)        = 1 (in [3])
+
+file descriptor `3` is this, according to lsof:
+
+    github-ba 18134 anarcat    3u  IPv4 162905      0t0     TCP localhost:35828->localhost:9050 (CLOSE_WAIT)
+
+... that's the local SOCKS connexion over to the tor daemon that
+`torsocks` reroutes the traffic to, with `LD_PRELOAD`, which I suspect
+is playing badly with the Haskell stack behind `github-backup`.
+
+So I understand this might be a compatibility issue - maybe the best
+would be to add SOCKS proxy support to github-backup? Not sure how
+best to solve this... --[[anarcat]]

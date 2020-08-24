@@ -1,0 +1,13 @@
+When I run "stack install", I get the following message:
+
+```
+Unable to parse cabal file: NoParse "build-tools" 91
+```
+
+I'm not really familiar with Haskell, and I didn't find anything by searching DuckDuckGo for the error message.
+Any ideas how I can fix this?
+
+---
+
+Update:
+I used `sudo apt-get install github-backup` and it installed with no problems. :)

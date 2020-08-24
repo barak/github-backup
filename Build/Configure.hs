@@ -4,8 +4,9 @@
 
 module Build.Configure where
 
-import Control.Applicative
 import Control.Monad.IfElse
+import Control.Applicative
+import Prelude
 
 import Build.TestConfig
 import Build.Version

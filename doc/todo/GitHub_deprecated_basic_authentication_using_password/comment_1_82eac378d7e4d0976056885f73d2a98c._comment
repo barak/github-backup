@@ -1,0 +1,12 @@
+[[!comment format=mdwn
+ username="joey"
+ subject="""comment 1"""
+ date="2019-12-19T20:54:36Z"
+ content="""
+Unless this is an OAuth token,  it does not look like the github
+library supports it yet.
+<http://hackage.haskell.org/package/github-0.24/docs/GitHub-Auth.html>
+
+Though there is the generic setAuthRequest which could probably be used to
+implement it, it doesn't seem right to put the code in github-backup.
+"""]]

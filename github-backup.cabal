@@ -1,6 +1,6 @@
 Name: github-backup
-Version: 1.20171126
-Cabal-Version: >= 1.8
+Version: 1.20200721
+Cabal-Version: >= 1.10
 Maintainer: Joey Hess <id@joeyh.name>
 Author: Joey Hess
 Stability: Stable
@@ -30,29 +30,22 @@ Extra-Source-Files:
   configure.hs
   Build/collect-ghc-options.sh
 
-Flag network-uri
-  Description: Get Network.URI from the network-uri package
-  Default: True
-
 Executable github-backup
   Main-Is: github-backup.hs
   GHC-Options: -Wall -fno-warn-tabs -threaded
+  Default-Language: Haskell98
   Build-Depends:
     base (>= 4.8 && < 5),
-    github (>= 0.18 && < 0.19),
+    github (>= 0.23 && < 0.24),
     text, filepath, exceptions, transformers, bytestring, vector,
     hslogger, split, process, containers, unix-compat, IfElse,
-    directory, mtl, utf8-string, optparse-applicative, pretty-show
+    directory, mtl, utf8-string, optparse-applicative, pretty-show,
+    network-uri (>= 2.6), network (>= 2.6)
   
   if (! os(windows))
     Build-Depends: unix
   else
     Build-Depends: Win32, setenv
-  
-  if flag(network-uri)
-    Build-Depends: network-uri (>= 2.6), network (>= 2.6)
-  else
-    Build-Depends: network (< 2.6), network (>= 2.0)
   
   Other-Modules:
     BuildInfo
@@ -96,6 +89,8 @@ Executable github-backup
     Utility.UserInfo
     Utility.Misc
     Utility.Env
+    Utility.Env.Basic
+    Utility.Env.Set
     Utility.PosixFiles
     Utility.Data
     Utility.PartialPrelude
@@ -108,22 +103,19 @@ Executable github-backup
 Executable gitriddance
   Main-Is: gitriddance.hs
   GHC-Options: -Wall -fno-warn-tabs
+  Default-Language: Haskell98
   Build-Depends: 
     base (>= 4.8 && < 5),
-    github (>= 0.18 && < 0.19),
+    github (>= 0.23 && < 0.24),
     text, filepath, exceptions, transformers, bytestring, vector,
     hslogger, split, process, containers, unix-compat, IfElse,
-    directory, mtl, utf8-string
+    directory, mtl, utf8-string,
+    network-uri (>= 2.6), network (>= 2.6)
   
   if (! os(windows))
     Build-Depends: unix
   else
     Build-Depends: Win32, setenv
-  
-  if flag(network-uri)
-    Build-Depends: network-uri (>= 2.6), network (>= 2.6)
-  else
-    Build-Depends: network (< 2.6), network (>= 2.0)
 
   Other-Modules:
     Common
@@ -142,6 +134,8 @@ Executable gitriddance
     Utility.Data
     Utility.Directory
     Utility.Env
+    Utility.Env.Basic
+    Utility.Env.Set
     Utility.Exception
     Utility.FileMode
     Utility.FileSystemEncoding

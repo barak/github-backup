@@ -5,7 +5,12 @@ pull requests, watchers, and stars.
 
 ## Installation
 
-First install Haskell's [stack](http://haskellstack.org/) tool.
+Several distributions include packages of github-backup, for example
+on Debian and Debian derived distributions it can easily be installed
+with `sudo apt-get install github-backup`.
+
+To build it from source, first install Haskell's
+[stack](http://haskellstack.org/) tool.
 For example, on a Debian system:
 
 	sudo apt-get install haskell-stack
@@ -33,9 +38,9 @@ making packages of github-backup.
 
 There are a couple of reasons to want to back this stuff up:
 
-* In case something happens to GitHub. More generally because
-  keeping your data in the cloud *and* relying on the cloud to
-  back it up is foolish.
+* In case something happens to GitHub. (Some may argue that this has
+  already happened.) More generally because keeping your data in the
+  cloud *and* relying on the cloud to back it up is foolish.
 
 * In case someone takes down a repository that you were interested in.
   If you run github-backup with your username, it will back up all 
@@ -85,9 +90,9 @@ or even if it just has a lot of forks.
 Bear in mind that this uses the GitHub API; don't run it every 5 minutes.
 GitHub [rate limits](http://developer.github.com/v3/#rate-limiting) the
 API to some small number of requests per hour when used without
-authentication. To avoid this limit, you can set `GITHUB_USER` and
-`GITHUB_PASSWORD` (or `GITHUB_OAUTH_TOKEN` obtained from
-<https://github.com/settings/tokens>) in the environment and
+authentication. To avoid this limit, you can set the environment
+variable `GITHUB_OAUTH_TOKEN` to a token obtained from 
+<https://github.com/settings/tokens> and
 it will log in when making (most) API requests.
 
 Anyway, github-backup *does* do an incremental backup, picking up where it

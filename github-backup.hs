@@ -14,14 +14,12 @@ import qualified Data.Map as M
 import qualified Data.Set as S
 import qualified Data.Text as T
 import Data.Either
-import Data.Monoid
 import Data.String
 import GHC.Exts (toList)
 import Data.Vector (Vector)
 import Options.Applicative
 import Text.Show.Pretty
 import "mtl" Control.Monad.State.Strict
-import qualified GitHub.Data.Id as Github
 import qualified GitHub.Data.Name as Github
 import qualified GitHub.Auth as Github
 import qualified GitHub.Data.Repos as Github
@@ -83,6 +81,7 @@ data BackupState = BackupState
 	, retriedRequests :: S.Set Request
 	, retriedFailed :: S.Set Request
 	, gitRepo :: Git.Repo
+	, gitRepoRemotes :: [Git.Repo]
 	, gitHubAuth :: Maybe Github.Auth
 	, deferredBackups :: [Backup ()]
 	, catFileHandle :: Maybe CatFileHandle
@@ -160,7 +159,7 @@ pullrequestsStore :: Storer
 pullrequestsStore = simpleHelper "pullrequest" Github.pullRequestsFor' $
 	forValues $ \req r -> do
 		let repo = requestRepo req
-		let n = Github.simplePullRequestNumber r
+		let n = Github.unIssueNumber $ Github.simplePullRequestNumber r
 		runRequest $ RequestNum "pullrequest" repo n
 
 pullrequestStore :: Storer
@@ -170,7 +169,7 @@ pullrequestStore = numHelper "pullrequest" call $ \n ->
 	call auth user repo n = Github.pullRequest' auth
 		(fromString user)
 		(fromString repo)
-		(Github.mkId (Github.Id 0) n)
+		(Github.IssueNumber n)
 
 milestonesStore :: Storer
 milestonesStore = simpleHelper "milestone" GitHub.Endpoints.Issues.Milestones.milestones' $
@@ -185,7 +184,7 @@ issuesStore = withHelper "issue"
   where
 	go = forValues $ \req i -> do
 		let repo = requestRepo req
-		let n = Github.issueNumber i
+		let n = Github.unIssueNumber $ Github.issueNumber i
 		store ("issue" </> show n) req i
 		runRequest (RequestNum "issuecomments" repo n)
 
@@ -198,7 +197,7 @@ issuecommentsStore = numHelper "issuecomments" call $ \n ->
 	call auth user repo n = GitHub.Endpoints.Issues.Comments.comments' auth
 		(fromString user)
 		(fromString repo)
-		(Github.mkId (Github.Id 0) n)
+		(Github.IssueNumber n)
 
 userrepoStore :: Storer
 userrepoStore = simpleHelper "repo" Github.repository' $ \req r -> do
@@ -326,7 +325,7 @@ commitWorkDir = do
 			sha <- hashFile h f
 			path <- asTopFilePath <$> relPathDirToFile dir f
 			streamer $ Git.UpdateIndex.updateIndexLine
-				sha Git.Types.FileBlob path
+				sha Git.Types.TreeFile path
 
 {- Returns the ref of the github branch, creating it first if necessary. -}
 getBranch :: Backup Git.Ref
@@ -367,7 +366,7 @@ hasOrigin = inRepo $ Git.Ref.exists originname
 
 updateWiki :: GithubUserRepo -> Backup ()
 updateWiki fork =
-	ifM (any (\r -> Git.remoteName r == Just remote) <$> remotes)
+	ifM (any (\r -> Git.remoteName r == Just remote) <$> getState gitRepoRemotes)
 		( void fetchwiki
 		, void $
 			-- github often does not really have a wiki,
@@ -377,13 +376,12 @@ updateWiki fork =
 		)
   where
 	fetchwiki = inRepo $ Git.Command.runBool [Param "fetch", Param remote]
-	remotes = Git.remotes <$> getState gitRepo
 	remote = remoteFor fork
 	remoteFor (GithubUserRepo user repo) =
 		"github_" ++ user ++ "_" ++ repo ++ ".wiki"
 
 addFork :: ToGithubUserRepo a => a -> Backup ()
-addFork forksource = unlessM (elem fork . gitHubRemotes <$> getState gitRepo) $ do
+addFork forksource = unlessM (elem fork . gitHubRemotes <$> getState gitRepoRemotes) $ do
 	liftIO $ putStrLn $ "New fork: " ++ repoUrl fork
 	void $ addRemote (remoteFor fork) (repoUrl fork)
 	gitRepo' <- inRepo $ Git.Config.reRead
@@ -494,6 +492,7 @@ newState noforks r = BackupState
 	<*> pure S.empty
 	<*> pure S.empty
 	<*> pure r
+	<*> Git.Construct.fromRemotes r
 	<*> getAuth
 	<*> pure []
 	<*> pure Nothing
@@ -518,7 +517,7 @@ backupRepo noforks (Just repo) =
 
 mainBackup :: Backup ()
 mainBackup = do
-	remotes <- gitHubPairs <$> getState gitRepo
+	remotes <- gitHubPairs <$> getState gitRepoRemotes
 	when (null remotes) $
 		error "no github remotes found"
 	forM_ remotes $ \(r, remote) -> do

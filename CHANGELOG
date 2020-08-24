@@ -1,9 +1,20 @@
-github-backup (1.20171127) UNRELEASED; urgency=medium
+github-backup (1.20200721) unstable; urgency=medium
 
+  * Removed support for GITHUB_USER/GITHUB_PASSWORD since github will soon
+    remove support for http basic auth. Use GITHUB_OAUTH_TOKEN instead.
+
+ -- Joey Hess <id@joeyh.name>  Tue, 21 Jul 2020 23:24:03 -0400
+
+github-backup (1.20191219) unstable; urgency=medium
+
+  * Updated to use github-0.23 (0.24 needs larger changes)
   * Various updates to internal git and utility libraries shared
     with git-annex.
+  * Remove support for building with old versions of network-uri and network
+    before the split in 2.6.
+  * stack.yaml: Updated to lts-13.29.
 
- -- Joey Hess <id@joeyh.name>  Thu, 14 Dec 2017 13:12:28 -0400
+ -- Joey Hess <id@joeyh.name>  Thu, 19 Dec 2019 18:43:05 -0400
 
 github-backup (1.20171126) unstable; urgency=medium
 

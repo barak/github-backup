@@ -5,6 +5,9 @@ gitriddance
 Build/SysConfig
 
 dist
+dist-newstyle
+cabal.project.local
+cabal.project.local~
 cabal-dev
 *.o
 *.hi

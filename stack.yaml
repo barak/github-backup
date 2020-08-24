@@ -1,7 +1,11 @@
 packages:
 - '.'
 extra-deps: 
+ - github-0.23
  - IfElse-0.85
+ - binary-instances-1
+ - binary-orphans-1.0.1
+ - time-compat-1.9.2.2
 explicit-setup-deps:
   github-backup: true
-resolver: nightly-2017-11-25
+resolver: lts-13.29

@@ -28,14 +28,14 @@ instance ToGithubUserRepo Github.RepoRef where
 		(T.unpack $ Github.untagName $ Github.simpleOwnerLogin owner)
 		(T.unpack $ Github.untagName name)
 
-gitHubRepos :: Git.Repo -> [Git.Repo]
+gitHubRepos :: [Git.Repo] -> [Git.Repo]
 gitHubRepos = fst . unzip . gitHubPairs
 
-gitHubRemotes :: Git.Repo -> [GithubUserRepo]
+gitHubRemotes :: [Git.Repo] -> [GithubUserRepo]
 gitHubRemotes = snd . unzip . gitHubPairs
 
-gitHubPairs :: Git.Repo -> [(Git.Repo, GithubUserRepo)]
-gitHubPairs = filter (not . wiki ) . mapMaybe check . Git.Types.remotes
+gitHubPairs :: [Git.Repo] -> [(Git.Repo, GithubUserRepo)]
+gitHubPairs = filter (not . wiki ) . mapMaybe check
   where
 	check r@Git.Repo { Git.Types.location = Git.Types.Url u } =
 		headMaybe $ mapMaybe (checkurl r $ show u) gitHubUrlPrefixes

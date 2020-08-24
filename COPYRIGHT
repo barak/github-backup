@@ -2,14 +2,14 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Source: native package
 
 Files: *
-Copyright: © 2010-2014 Joey Hess <id@joeyh.name>
+Copyright: © 2010-2018 Joey Hess <id@joeyh.name>
 License: GPL-3+
  The full text of version 3 of the GPL is distributed as doc/GPL in
  this package's source, or in /usr/share/common-licenses/GPL-3 on
  Debian systems.
 
 Files: Utility/*
-Copyright: 2012-2014 Joey Hess <id@joeyh.name>
+Copyright: 2012-2018 Joey Hess <id@joeyh.name>
 License: BSD-2-clause
 
 License: BSD-2-clause
