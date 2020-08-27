@@ -18,6 +18,7 @@ Build-Depends:
 	libghc-utf8-string-dev,
 	libghc-filepath-bytestring-dev,
 	libghc-bytestring-dev,
+	libghc-split-dev,
 Maintainer: Barak A. Pearlmutter <bap@debian.org>
 Standards-Version: 4.5.0
 Vcs-Git: https://salsa.debian.org/debian/github-backup.git
