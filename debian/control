@@ -21,6 +21,7 @@ Build-Depends:
 	libghc-split-dev,
 Maintainer: Barak A. Pearlmutter <bap@debian.org>
 Standards-Version: 4.5.0
+Rules-Requires-Root: no
 Vcs-Git: https://salsa.debian.org/debian/github-backup.git
 Vcs-Browser: https://salsa.debian.org/debian/github-backup
 Homepage: https://github-backup.branchable.com/
