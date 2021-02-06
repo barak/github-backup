@@ -1,3 +1,9 @@
+github-backup (1.20200721-3) UNRELEASED; urgency=medium
+
+  * Quilt patch to for singular request (closes: #982105)
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Sat, 06 Feb 2021 16:51:41 +0000
+
 github-backup (1.20200721-2) unstable; urgency=medium
 
   * Oops missing build dependency on libghc-split-dev

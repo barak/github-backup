@@ -1,0 +1,28 @@
+From: "Barak A. Pearlmutter" <barak+git@pearlmutter.net>
+Date: Sat, 6 Feb 2021 16:50:18 +0000
+Subject: warning grammar
+
+One request; many requests.
+See https://bugs.debian.org/982105
+---
+ github-backup.hs | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/github-backup.hs b/github-backup.hs
+index 82d65e8..429f884 100644
+--- a/github-backup.hs
++++ b/github-backup.hs
+@@ -481,10 +481,12 @@ showFailures :: [Request] -> IO ()
+ showFailures [] = noop
+ showFailures l = hPutStrLn stderr $ unlines $
+ 	["Backup may be incomplete; " ++ 
+-		show (length l) ++ " requests failed:"
++		show n ++ " request" ++ (if n==1 then "" else "s") ++ " failed:"
+ 	] ++ map ("  " ++) (summarizeRequests l) ++ 
+ 	[ "Run again later."
+ 	]
++  where
++    n = length l
+ 
+ newState :: Bool -> Git.Repo -> IO BackupState
+ newState noforks r = BackupState
